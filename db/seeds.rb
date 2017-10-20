@@ -1,3 +1,4 @@
+# Users
 User.create!(name:  "Example User",
              email: "example@railstutorial.org",
              password:              "foobar",
@@ -26,8 +27,17 @@ User.create!(name:  "Asher Dale",
                activated_at: Time.zone.now)
 end
 
+# Microposts
 users = User.order(:created_at).take(6)
 50.times do
   content = Faker::Lorem.sentence(5)
   users.each { |user| user.microposts.create!(content: content) }
 end
+
+# Relationships
+users = User.all
+user = users.second
+following = users[3..50]
+followers = users[4..40]
+following.each { |other_user| user.follow(other_user) }
+followers.each { |other_user| other_user.follow(user) }
